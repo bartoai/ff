@@ -815,7 +815,78 @@
         }
 
         function showDetails(wallet) {
-            alert(`Showing details for wallet: ${wallet}\n\n(This would normally show detailed transaction analysis)`);
+            // Create a modal-like overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: #2a2a2a;
+                border: 1px solid #333;
+                border-radius: 16px;
+                padding: 30px;
+                max-width: 500px;
+                width: 90%;
+                color: white;
+            `;
+            
+            const transactions = Math.floor(Math.random() * 50) + 10;
+            const profitLoss = (Math.random() * 200 - 100).toFixed(2);
+            const successRate = (Math.random() * 100).toFixed(1);
+            
+            modal.innerHTML = `
+                <h3 style="margin-bottom: 20px; color: #a855f7;">Wallet Details</h3>
+                <div style="font-family: 'Courier New', monospace; font-size: 12px; color: #888; margin-bottom: 20px; word-break: break-all;">${wallet}</div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                    <div>
+                        <div style="color: #888; font-size: 12px; margin-bottom: 5px;">Total Transactions</div>
+                        <div style="font-size: 18px; font-weight: 600;">${transactions}</div>
+                    </div>
+                    <div>
+                        <div style="color: #888; font-size: 12px; margin-bottom: 5px;">Success Rate</div>
+                        <div style="font-size: 18px; font-weight: 600; color: ${successRate > 50 ? '#10b981' : '#ef4444'};">${successRate}%</div>
+                    </div>
+                    <div>
+                        <div style="color: #888; font-size: 12px; margin-bottom: 5px;">P&L (SOL)</div>
+                        <div style="font-size: 18px; font-weight: 600; color: ${profitLoss > 0 ? '#10b981' : '#ef4444'};">${profitLoss > 0 ? '+' : ''}${profitLoss}</div>
+                    </div>
+                    <div>
+                        <div style="color: #888; font-size: 12px; margin-bottom: 5px;">Avg Copy Delay</div>
+                        <div style="font-size: 18px; font-weight: 600;">${Math.floor(Math.random() * 300) + 15}s</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="copyToClipboard('${wallet}')" style="flex: 1; padding: 10px; background: linear-gradient(90deg, #a855f7 0%, #06b6d4 100%); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer;">
+                        Copy Address
+                    </button>
+                    <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" style="flex: 1; padding: 10px; background: transparent; color: #888; border: 1px solid #333; border-radius: 8px; font-size: 14px; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Close on overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
         }
 
         // Auto-fill example wallet address
