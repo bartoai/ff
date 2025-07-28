@@ -61,7 +61,8 @@
             background-clip: text;
             letter-spacing: 2px;
             margin-bottom: 20px;
-            opacity: 0;
+            opacity: 1;
+            min-height: 60px;
         }
 
         .loading-tagline {
@@ -797,31 +798,31 @@
     <script>
         let currentScreen = 'home';
 
-        // Loading animation
-        window.addEventListener('load', function() {
+        // Loading animation - Start immediately when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
             const title = "GUTS TRACKER";
             const titleElement = document.getElementById('loadingTitle');
             let charIndex = 0;
 
+            console.log('Starting typing animation...'); // Debug log
+
             function typeNextChar() {
                 if (charIndex < title.length) {
+                    const char = title[charIndex];
                     const span = document.createElement('span');
-                    span.textContent = title[charIndex];
+                    span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
                     span.className = 'typing-char';
-                    span.style.animationDelay = `${charIndex * 0.1}s`;
                     titleElement.appendChild(span);
+                    
+                    console.log('Added character:', char); // Debug log
+                    
                     charIndex++;
                     setTimeout(typeNextChar, 120);
-                } else {
-                    // After typing is complete, show the title element
-                    titleElement.style.opacity = '1';
                 }
             }
 
-            // Make sure title element is visible
-            titleElement.style.opacity = '1';
-            // Start typing animation after a brief delay
-            setTimeout(typeNextChar, 800);
+            // Start typing immediately
+            typeNextChar();
         });
 
         function showScreen(screenName) {
