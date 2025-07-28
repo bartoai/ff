@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copy Trader Detector</title>
+    <title>GUTS TRACKER</title>
     <style>
         * {
             margin: 0;
@@ -13,69 +13,148 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000000;
+            background: #1a1a1a;
             color: white;
             min-height: 100vh;
-            margin: 0;
-            padding: 0;
         }
 
-        .header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 60vh;
-            position: relative;
-            overflow: hidden;
+        /* Navigation */
+        .navbar {
+            background: #2a2a2a;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.5;
-        }
-
-        .container {
-            max-width: 600px;
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px 40px;
-            position: relative;
-            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
 
-        .main-content {
-            background: #000000;
-            min-height: 40vh;
-            padding: 0 20px 40px;
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #6366f1;
+            letter-spacing: 1px;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        /* Main Container */
         .main-container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding-top: 40px;
+            padding: 40px 20px;
+        }
+
+        /* Home Screen */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+        }
+
+        .home-card {
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .home-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .home-subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .home-description {
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+
+        .select-wallet-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .select-wallet-btn:hover {
+            background: #5856eb;
+            transform: translateY(-1px);
+        }
+
+        /* Copy Trader Screen */
+        .copy-trader-screen {
+            display: none;
         }
 
         .search-section {
-            background: rgba(30, 30, 60, 0.8);
-            border-radius: 20px;
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #333;
+            border-radius: 16px;
             padding: 30px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        h1 {
-            font-size: 24px;
+        .search-title {
+            font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #ffffff;
         }
 
-        .subtitle {
-            color: #a0a0a0;
+        .search-subtitle {
+            color: #888;
             margin-bottom: 25px;
             font-size: 14px;
         }
@@ -88,8 +167,8 @@
         input[type="text"] {
             width: 100%;
             padding: 15px 20px;
-            background: rgba(20, 20, 40, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #1a1a1a;
+            border: 1px solid #333;
             border-radius: 12px;
             color: white;
             font-size: 14px;
@@ -98,8 +177,8 @@
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #6c5ce7;
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         input[type="text"]::placeholder {
@@ -124,33 +203,207 @@
             box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
         }
 
-        .search-button:active {
-            transform: translateY(0);
+        /* Token Holder Tracker Screen */
+        .token-tracker-screen {
+            display: none;
         }
 
-        .results-section {
-            background: rgba(30, 30, 60, 0.8);
-            border-radius: 20px;
+        .tracker-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .tracker-form {
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #333;
+            border-radius: 16px;
             padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: none;
+            height: fit-content;
+        }
+
+        .form-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #ccc;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #6366f1;
+        }
+
+        .checkbox-label {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .primary-btn {
+            flex: 1;
+            padding: 12px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .primary-btn:hover {
+            background: #5856eb;
+        }
+
+        .secondary-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            color: #6366f1;
+            border: 1px solid #6366f1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: #6366f1;
+            color: white;
+        }
+
+        .help-text {
+            background: rgba(42, 42, 42, 0.5);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .help-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .help-item {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .results-title {
             font-size: 18px;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .results-subtitle {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+        }
+
+        .no-results-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            opacity: 0.5;
+        }
+
+        .no-results-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .no-results-subtext {
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Copy Trader Results */
+        .results-section {
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results-header {
+            margin-bottom: 20px;
         }
 
         .target-wallet {
             color: #a855f7;
             font-family: 'Courier New', monospace;
-            font-size: 14px;
-        }
-
-        .results-subtitle {
-            color: #a0a0a0;
-            margin-bottom: 25px;
             font-size: 14px;
         }
 
@@ -166,10 +419,10 @@
         th {
             text-align: left;
             padding: 12px;
-            color: #a0a0a0;
+            color: #888;
             font-size: 12px;
             font-weight: 500;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #333;
         }
 
         td {
@@ -205,14 +458,10 @@
             font-weight: 600;
         }
 
-        .avg-time {
-            color: #ffffff;
-        }
-
         .show-button {
-            background: rgba(108, 92, 231, 0.2);
-            border: 1px solid #6c5ce7;
-            color: #6c5ce7;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid #6366f1;
+            color: #6366f1;
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
@@ -221,13 +470,13 @@
         }
 
         .show-button:hover {
-            background: rgba(108, 92, 231, 0.3);
+            background: rgba(99, 102, 241, 0.3);
         }
 
         .loading {
             text-align: center;
             padding: 40px;
-            color: #a0a0a0;
+            color: #888;
         }
 
         .spinner {
@@ -235,7 +484,7 @@
             height: 40px;
             margin: 0 auto 20px;
             border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid #a855f7;
+            border-top: 3px solid #6366f1;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -245,52 +494,101 @@
             100% { transform: rotate(360deg); }
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 60px 10px 20px;
+        /* Access Granted Alert */
+        .access-alert {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #10b981;
+        }
+
+        .access-icon {
+            width: 16px;
+            height: 16px;
+            fill: #10b981;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tracker-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .nav-container {
+                padding: 0 15px;
+            }
+            
+            .nav-links {
+                gap: 20px;
             }
             
             .main-container {
-                padding: 20px 10px;
-            }
-            
-            .search-section, .results-section {
-                padding: 20px;
-            }
-            
-            .wallet-address {
-                max-width: 120px;
+                padding: 20px 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">GUTS TRACKER</div>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showScreen('home')">Home</a>
+                <a href="#" class="nav-link" onclick="showScreen('copy-trader')">Copy Trader</a>
+                <a href="#" class="nav-link" onclick="showScreen('token-tracker')">History</a>
+            </div>
+            
+            <div class="connection-status">
+                <div class="status-dot"></div>
+                <span>Wallet connected successfully</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Home Screen -->
+        <div id="home-screen" class="home-screen">
+            <div class="home-card">
+                <h1 class="home-title">GUTS TRACKER</h1>
+                <p class="home-subtitle">Track token holders across multiple Solana contracts</p>
+                <p class="home-description">Connect your Solana wallet to get started</p>
+                <button class="select-wallet-btn" onclick="showScreen('token-tracker')">Select Wallet</button>
+            </div>
+        </div>
+
+        <!-- Copy Trader Screen -->
+        <div id="copy-trader-screen" class="copy-trader-screen">
             <div class="search-section">
-                <h1>Copy Trader Detector</h1>
-                <p class="subtitle">Find wallets that copy trade a target wallet's SPL token transfers.</p>
+                <h1 class="search-title">Copy Trader Detector</h1>
+                <p class="search-subtitle">Find wallets that copy trade a target wallet's SPL token transfers.</p>
                 
                 <div class="input-container">
-                    <input type="text" id="walletInput" placeholder="Enter Solana wallet address..." />
+                    <input type="text" id="copyTraderInput" placeholder="suqh5sHkr8HyJ7q8scBimULPkPpA557prMG47xCHQfK" />
                 </div>
                 
                 <button class="search-button" onclick="findCopyTraders()">Find Copy Traders</button>
             </div>
-        </div>
-    </div>
 
-    <div class="main-content">
-        <div class="main-container">
-            <div class="results-section" id="resultsSection">
-                <div class="loading" id="loadingDiv">
+            <div class="results-section" id="copyTraderResults">
+                <div class="loading" id="copyTraderLoading">
                     <div class="spinner"></div>
                     <p>Analyzing wallet transactions...</p>
                 </div>
                 
-                <div id="resultsContent" style="display: none;">
-                    <h2 class="results-title">Copy Traders for <span class="target-wallet" id="targetWallet"></span></h2>
-                    <p class="results-subtitle">Wallets that mimic this address's SPL token transfers</p>
+                <div id="copyTraderContent" style="display: none;">
+                    <div class="results-header">
+                        <h2 class="results-title">Copy Traders for <span class="target-wallet" id="targetWallet"></span></h2>
+                        <p class="results-subtitle">Wallets that mimic this address's SPL token transfers</p>
+                    </div>
                     
                     <div class="table-container">
                         <table>
@@ -302,9 +600,77 @@
                                     <th>Details</th>
                                 </tr>
                             </thead>
-                            <tbody id="resultsTableBody">
+                            <tbody id="copyTraderTableBody">
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Token Holder Tracker Screen -->
+        <div id="token-tracker-screen" class="token-tracker-screen">
+            <div class="access-alert">
+                <svg class="access-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span>Access Granted</span>
+                <span style="color: #888; margin-left: auto;">App Wallet address: XXXXXX...XXXXXX – Connected</span>
+            </div>
+
+            <div class="tracker-layout">
+                <div class="tracker-form">
+                    <h2 class="form-title">Token Holder Tracker</h2>
+                    <p class="form-subtitle">Enter up to 10 Solana token contract addresses</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Enter Contract Address</label>
+                        <input type="text" class="form-input" id="contractAddress" placeholder="Enter Solana token address..." />
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox" id="addAnother" />
+                        <label class="checkbox-label" for="addAnother">Add another token</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Filter Type</label>
+                        <select class="form-input">
+                            <option>Hold ANY of the below</option>
+                            <option>Hold ALL of the below</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Hold ANY of the below</label>
+                        <input type="number" class="form-input" placeholder="100" />
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="primary-btn" onclick="searchHolders()">Search Holders</button>
+                        <button class="secondary-btn">Export CSV</button>
+                    </div>
+                    
+                    <div class="help-text">
+                        <div class="help-title">Filter Details</div>
+                        <div class="help-item">• Hold ANY: Holders wallet that hold at least one of the specified tokens</div>
+                        <div class="help-item">• Hold ALL: Holders wallet that hold all of the specified tokens</div>
+                        <div class="help-item">• Filter wallet below the token minimum thresholds</div>
+                        <div class="help-item">• Search will return all the specified contract wallets</div>
+                    </div>
+                </div>
+                
+                <div class="results-panel" id="tokenResults">
+                    <h3 class="results-title">Results</h3>
+                    <p class="results-subtitle">Token holder analysis results</p>
+                    
+                    <div class="no-results">
+                        <svg class="no-results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <div class="no-results-text">No results yet</div>
+                        <div class="no-results-subtext">Enter token addresses and search for holders</div>
                     </div>
                 </div>
             </div>
@@ -312,6 +678,26 @@
     </div>
 
     <script>
+        let currentScreen = 'home';
+
+        function showScreen(screenName) {
+            // Hide all screens
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('copy-trader-screen').style.display = 'none';
+            document.getElementById('token-tracker-screen').style.display = 'none';
+            
+            // Show selected screen
+            document.getElementById(screenName + '-screen').style.display = 'block';
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentScreen = screenName;
+        }
+
         // Generate random Solana wallet addresses
         function generateSolanaAddress() {
             const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz123456789';
@@ -324,28 +710,27 @@
 
         // Generate random copy trader data
         function generateCopyTraderData() {
-            const numTraders = Math.floor(Math.random() * 8) + 1; // 1-8 traders
+            const numTraders = Math.floor(Math.random() * 8) + 1;
             const traders = [];
             
             for (let i = 0; i < numTraders; i++) {
                 traders.push({
                     wallet: generateSolanaAddress(),
                     timesCopied: Math.floor(Math.random() * 50) + 1,
-                    avgTimeLag: Math.floor(Math.random() * 300) + 15 // 15-315 seconds
+                    avgTimeLag: Math.floor(Math.random() * 300) + 15
                 });
             }
             
-            // Sort by times copied (descending)
             return traders.sort((a, b) => b.timesCopied - a.timesCopied);
         }
 
         function findCopyTraders() {
-            const walletInput = document.getElementById('walletInput');
-            const resultsSection = document.getElementById('resultsSection');
-            const loadingDiv = document.getElementById('loadingDiv');
-            const resultsContent = document.getElementById('resultsContent');
+            const walletInput = document.getElementById('copyTraderInput');
+            const resultsSection = document.getElementById('copyTraderResults');
+            const loadingDiv = document.getElementById('copyTraderLoading');
+            const resultsContent = document.getElementById('copyTraderContent');
             const targetWallet = document.getElementById('targetWallet');
-            const resultsTableBody = document.getElementById('resultsTableBody');
+            const resultsTableBody = document.getElementById('copyTraderTableBody');
             
             const inputValue = walletInput.value.trim();
             
@@ -354,23 +739,15 @@
                 return;
             }
             
-            // Show results section with loading
             resultsSection.style.display = 'block';
             loadingDiv.style.display = 'block';
             resultsContent.style.display = 'none';
             
-            // Simulate API call delay
             setTimeout(() => {
-                // Generate random data
                 const copyTraders = generateCopyTraderData();
-                
-                // Update target wallet display
                 targetWallet.textContent = inputValue;
-                
-                // Clear previous results
                 resultsTableBody.innerHTML = '';
                 
-                // Populate results table
                 copyTraders.forEach(trader => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -390,15 +767,44 @@
                     resultsTableBody.appendChild(row);
                 });
                 
-                // Hide loading and show results
                 loadingDiv.style.display = 'none';
                 resultsContent.style.display = 'block';
-            }, 2000); // 2 second delay
+            }, 2000);
+        }
+
+        function searchHolders() {
+            const contractAddress = document.getElementById('contractAddress').value.trim();
+            const resultsPanel = document.getElementById('tokenResults');
+            
+            if (!contractAddress) {
+                alert('Please enter a token contract address');
+                return;
+            }
+            
+            resultsPanel.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Searching token holders...</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                const numHolders = Math.floor(Math.random() * 500) + 50;
+                resultsPanel.innerHTML = `
+                    <h3 class="results-title">Results</h3>
+                    <p class="results-subtitle">Found ${numHolders} token holders</p>
+                    
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 32px; font-weight: bold; color: #10b981; margin-bottom: 10px;">${numHolders}</div>
+                        <div style="color: #888; margin-bottom: 20px;">Unique wallet addresses found</div>
+                        <button class="primary-btn" style="width: auto; padding: 8px 16px;">Export Results</button>
+                    </div>
+                `;
+            }, 3000);
         }
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                // You could add a toast notification here
                 console.log('Copied to clipboard:', text);
             }).catch(err => {
                 console.error('Failed to copy:', err);
@@ -409,16 +815,9 @@
             alert(`Showing details for wallet: ${wallet}\n\n(This would normally show detailed transaction analysis)`);
         }
 
-        // Allow Enter key to trigger search
-        document.getElementById('walletInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                findCopyTraders();
-            }
-        });
-
-        // Auto-fill with example wallet address on page load
+        // Auto-fill example wallet address
         window.addEventListener('load', function() {
-            document.getElementById('walletInput').value = 'suqh5sHkr8HyJ7q8scBimULPkPpA557prMG47xCHQfK';
+            document.getElementById('copyTraderInput').value = 'suqh5sHkr8HyJ7q8scBimULPkPpA557prMG47xCHQfK';
         });
     </script>
 </body>
