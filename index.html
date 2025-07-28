@@ -37,7 +37,10 @@
         .logo {
             font-size: 18px;
             font-weight: 700;
-            color: #6366f1;
+            background: linear-gradient(90deg, #a855f7 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: 1px;
         }
 
@@ -118,7 +121,7 @@
         }
 
         .select-wallet-btn {
-            background: #6366f1;
+            background: linear-gradient(90deg, #a855f7 0%, #06b6d4 100%);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -130,8 +133,8 @@
         }
 
         .select-wallet-btn:hover {
-            background: #5856eb;
             transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
         }
 
         /* Copy Trader Screen */
@@ -548,8 +551,8 @@
             </div>
             
             <div class="connection-status">
-                <div class="status-dot"></div>
-                <span>Wallet connected successfully</span>
+                <div class="status-dot" style="background: #ef4444;"></div>
+                <span>Wallet not connected</span>
             </div>
         </div>
     </nav>
@@ -615,7 +618,7 @@
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                 </svg>
                 <span>Access Granted</span>
-                <span style="color: #888; margin-left: auto;">App Wallet address: XXXXXX...XXXXXX – Connected</span>
+                <span style="color: #888; margin-left: auto;">Wallet not connected</span>
             </div>
 
             <div class="tracker-layout">
