@@ -75,13 +75,19 @@
 
         /* Typing Animation */
         .typing-char {
+            display: inline-block;
             opacity: 0;
             animation: typeIn 0.1s ease-out forwards;
         }
 
         @keyframes typeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -802,15 +808,20 @@
                     const span = document.createElement('span');
                     span.textContent = title[charIndex];
                     span.className = 'typing-char';
-                    span.style.animationDelay = '0s';
+                    span.style.animationDelay = `${charIndex * 0.1}s`;
                     titleElement.appendChild(span);
                     charIndex++;
-                    setTimeout(typeNextChar, 150);
+                    setTimeout(typeNextChar, 120);
+                } else {
+                    // After typing is complete, show the title element
+                    titleElement.style.opacity = '1';
                 }
             }
 
+            // Make sure title element is visible
+            titleElement.style.opacity = '1';
             // Start typing animation after a brief delay
-            setTimeout(typeNextChar, 500);
+            setTimeout(typeNextChar, 800);
         });
 
         function showScreen(screenName) {
